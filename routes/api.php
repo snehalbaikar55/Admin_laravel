@@ -188,10 +188,13 @@ Route::group([
     Route::get('/topdeveloper', [App\Http\Controllers\API\TblfeaturedimagesController::class,'topdeveloper'])->name('topdeveloper');
     Route::get('/listpropbydev/{id}', [App\Http\Controllers\API\TblfeaturedimagesController::class,'listpropbydev'])->name('listpropbydev');
     Route::get('/getprice', [App\Http\Controllers\API\TblfeaturedimagesController::class,'getprice'])->name('getprice');
+
     Route::post('/basic_email', [App\Http\Controllers\MailController::class,'basic_email'])->name('basic_email');
+    
     Route::post('/filterDataByPriceRange', [App\Http\Controllers\API\TblfeaturedimagesController::class,'filterDataByPriceRange'])->name('filterDataByPriceRange');
     Route::get('/show_property_by_city/{cityname}', [App\Http\Controllers\API\TblfeaturedimagesController::class,'show_property_by_city'])->name('show_property_by_city');
     Route::get('/show_property_by_bhk/{bhk}', [App\Http\Controllers\API\TblfeaturedimagesController::class,'show_property_by_bhk'])->name('show_property_by_bhk');
+    Route::get('/show_property_by_location_or_builder/{data}', [App\Http\Controllers\API\TblfeaturedimagesController::class,'show_property_by_location_or_builder'])->name('show_property_by_location_or_builder');
     /* get sub regions based on region */
     Route::get('/getRegionsOfSubregion/{region_id}' , [App\Http\Controllers\API\SubRegionController::class, 'getSubregionOfRegion'])->name('getSubregion');
 

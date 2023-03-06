@@ -1,2 +1,4 @@
-<h1>Hi, {{ $mailData }}</h1>
-l<p>Sending Mail from Laravel.</p>
+<h1>{{ $mailData['name'] }}</h1>
+    <p>{{ $mailData['email'] }}</p>
+    <p>{{ $mailData['mobile'] }}</p>
+<p>Sending Mail from Laravel.</p>

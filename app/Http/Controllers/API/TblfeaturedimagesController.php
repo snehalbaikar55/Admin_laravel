@@ -291,28 +291,28 @@ public function saveFilesMultipleTimes(\Illuminate\Http\UploadedFile $requestFil
         //$data = $request->all();
         //dd($data);
         //return $data;
-        if($data=="Under Construction"){
-        $tblfeaturedimages=DB::select( DB::raw("SELECT  p.*,r.Rera,f.FeaturedImage,  JSON_EXTRACT(ConStatus, '$[4].name') as `name` ,JSON_EXTRACT(ConStatus, '$[4].checked') as `checked` FROM tblpropertydetails p INNER JOIN tblfeaturedimages f ON f.PropertyID=p.PropertyID INNER JOIN tblrera r ON p.PropertyID=r.PropertyID  WHERE JSON_EXTRACT(ConStatus, '$[4].name')='$data' AND JSON_EXTRACT(ConStatus, '$[4].checked')='true';") );
-        }
-        else if($data=="Ready To Move"){
-            $tblfeaturedimages=DB::select( DB::raw("SELECT  p.*,r.Rera,f.FeaturedImage,  JSON_EXTRACT(ConStatus, '$[5].name') as `name` ,JSON_EXTRACT(ConStatus, '$[5].checked') as `checked` FROM tblpropertydetails p INNER JOIN tblfeaturedimages f ON f.PropertyID=p.PropertyID INNER JOIN tblrera r ON p.PropertyID=r.PropertyID  WHERE JSON_EXTRACT(ConStatus, '$[5].name')='$data' AND JSON_EXTRACT(ConStatus, '$[5].checked')='true';") );
-        }
-        else if($data=="New Project"){
-            $tblfeaturedimages=DB::select( DB::raw("SELECT  p.*,r.Rera,f.FeaturedImage,  JSON_EXTRACT(ConStatus, '$[2].name') as `name` ,JSON_EXTRACT(ConStatus, '$[2].checked') as `checked` FROM tblpropertydetails p INNER JOIN tblfeaturedimages f ON f.PropertyID=p.PropertyID INNER JOIN tblrera r ON p.PropertyID=r.PropertyID  WHERE JSON_EXTRACT(ConStatus, '$[2].name')='$data' AND JSON_EXTRACT(ConStatus, '$[2].checked')='true';") );
-       }
+    //     if($data=="Under Construction"){
+    //     $tblfeaturedimages=DB::select( DB::raw("SELECT  p.*,r.Rera,f.FeaturedImage,  JSON_EXTRACT(ConStatus, '$[4].name') as `name` ,JSON_EXTRACT(ConStatus, '$[4].checked') as `checked` FROM tblpropertydetails p INNER JOIN tblfeaturedimages f ON f.PropertyID=p.PropertyID INNER JOIN tblrera r ON p.PropertyID=r.PropertyID  WHERE JSON_EXTRACT(ConStatus, '$[4].name')='$data' AND JSON_EXTRACT(ConStatus, '$[4].checked')='true';") );
+    //     }
+    //     else if($data=="Ready To Move"){
+    //         $tblfeaturedimages=DB::select( DB::raw("SELECT  p.*,r.Rera,f.FeaturedImage,  JSON_EXTRACT(ConStatus, '$[5].name') as `name` ,JSON_EXTRACT(ConStatus, '$[5].checked') as `checked` FROM tblpropertydetails p INNER JOIN tblfeaturedimages f ON f.PropertyID=p.PropertyID INNER JOIN tblrera r ON p.PropertyID=r.PropertyID  WHERE JSON_EXTRACT(ConStatus, '$[5].name')='$data' AND JSON_EXTRACT(ConStatus, '$[5].checked')='true';") );
+    //     }
+    //     else if($data=="New Project"){
+    //         $tblfeaturedimages=DB::select( DB::raw("SELECT  p.*,r.Rera,f.FeaturedImage,  JSON_EXTRACT(ConStatus, '$[2].name') as `name` ,JSON_EXTRACT(ConStatus, '$[2].checked') as `checked` FROM tblpropertydetails p INNER JOIN tblfeaturedimages f ON f.PropertyID=p.PropertyID INNER JOIN tblrera r ON p.PropertyID=r.PropertyID  WHERE JSON_EXTRACT(ConStatus, '$[2].name')='$data' AND JSON_EXTRACT(ConStatus, '$[2].checked')='true';") );
+    //    }
         $tblfeaturedimages1 =  DB::table('tblpropertydetails')
-    //    ->join ('tblfeaturedimages', 'tblpropertydetails.PropertyID', '=', 'tblfeaturedimages.PropertyID')
+       ->join ('tblfeaturedimages', 'tblpropertydetails.PropertyID', '=', 'tblfeaturedimages.PropertyID')
     //    ->where('tblpropertydetails.ConStatus', $data)
     //    ->orWhere('tblpropertydetails.ConStatus', 'like', '%' . $data . '%')
        ->get();
-       $newarray=[];
-       $newConstatus=[];
-       $newarr[]=[];
-        for($i=0;$i<count($tblfeaturedimages1);$i++){
+    //    $newarray=[];
+    //    $newConstatus=[];
+    //    $newarr[]=[];
+    //     for($i=0;$i<count($tblfeaturedimages1);$i++){
             
-            for($j=0;$j<count($newarray);$j++)
-            {
-                $newarray[$i]=$tblfeaturedimages1[$i]->ConStatus;
+    //         for($j=0;$j<count($newarray);$j++)
+    //         {
+    //             $newarray[$i]=$tblfeaturedimages1[$i]->ConStatus;
                 //$newConstatus[$j]=json_decode($newarray[$j]);
                 // for($k=0;$k<count($newConstatus);$k++){
                 //     $newname[$k]=$newConstatus[$k];
@@ -322,10 +322,10 @@ public function saveFilesMultipleTimes(\Illuminate\Http\UploadedFile $requestFil
                     //     $newarr[$i]=$newConstatus[$i][$j];
                     // }
                 // }
-            }
-        }
+        //     }
+        // }
    
-       return response()->json($tblfeaturedimages);
+       return response()->json($tblfeaturedimages1);
     }
 
     public function searchByPropType($data){
@@ -444,6 +444,14 @@ public function saveFilesMultipleTimes(\Illuminate\Http\UploadedFile $requestFil
         $tblfeaturedimages =  DB::table('tblfeaturedimages')
         ->join('tblpropertydetails', 'tblpropertydetails.PropertyID', '=', 'tblfeaturedimages.PropertyID')
         ->where('tblpropertydetails.te7','LIKE', '%'.$bhk.'%')
+        ->get();
+        return response()->json($tblfeaturedimages);
+    }
+    public function show_property_by_location_or_builder($data){
+        //return $bhk;
+        $tblfeaturedimages =  DB::table('tblfeaturedimages')
+        ->join('tblpropertydetails', 'tblpropertydetails.PropertyID', '=', 'tblfeaturedimages.PropertyID')
+        ->where('tblpropertydetails.Location','LIKE', '%'.$data.'%','OR','tblpropertydetails.Location','LIKE', '%'.$data.'%')
         ->get();
         return response()->json($tblfeaturedimages);
     }
